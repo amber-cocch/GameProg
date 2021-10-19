@@ -35,13 +35,13 @@ namespace monogame_assignment
 
         XMLmanager<GameScreen> XmlGameScreenManager;
 
-       
+        MainMenu MainMenu;
 
         public static ScreenManager Instance
         {
             get
             {
-                if(instance == null)
+                if (instance == null)
                 {
                     //instance = new ScreenManager();
                     XMLmanager<ScreenManager> xml = new XMLmanager<ScreenManager>();
@@ -52,18 +52,14 @@ namespace monogame_assignment
             }
         }
 
-        public ScreenManager()
-        {
-            Dimensions = new Vector2(1920, 1080);
+        //Below are my functions for screen transitions. For some reason, they do not work. I spent 3 hours staring at it and going through the ppt and lecture but I still am unsure
+        //what the issue is. As far as I can tell, it is correct, but obviously something is amiss. If you see what is wrong, PLEASE let me know in a comment on my grade! I really
+        //want to know what I have been missing. It is eating at me :[  
 
-            currentScreen = new SplashScreen(); //polymorphism
-
-            XmlGameScreenManager = new XMLmanager<GameScreen>();
-            XmlGameScreenManager.type = currentScreen.GetType();
-            currentScreen = XmlGameScreenManager.Load("Load/SplashScreen.xml");
-        }
-
-        public void ChangeScreens(string screenName)
+        //The only thing I did discover was that if I changed Image.Alpha to greater than 0, it did darken the screen to that alpha when I pressed enter, but it did not fade in or fade out 
+        //to the other screen. It abruptly changed the alpha and that's it. Maybe that means FadeEffect doesn't work? But it did work when we cycled the fading. Maybe FadeEffect is not
+        //in the effectList? I am not sure.
+        public void ChangeScreens(string screenName) 
         {
             newScreen = (GameScreen)Activator.CreateInstance(Type.GetType("monogame_assignment." + screenName));
             Image.IsActive = true;
@@ -77,7 +73,7 @@ namespace monogame_assignment
             if (IsTransitioning)
             {
                 Image.Update(gameTime);
-                if(Image.Alpha == 1.0f)
+                if (Image.Alpha == 1.0f)
                 {
                     currentScreen.UnloadContent();
                     currentScreen = newScreen;
@@ -88,13 +84,28 @@ namespace monogame_assignment
                     }
                     currentScreen.LoadContent();
                 }
-                else if(Image.Alpha == 0.0f)
+                else if (Image.Alpha == 0.0f)
                 {
                     Image.IsActive = false;
                     IsTransitioning = false;
                 }
             }
         }
+
+       
+
+        public ScreenManager()
+        {
+            Dimensions = new Vector2(1920, 1080);
+
+            currentScreen = new SplashScreen(); //polymorphism
+
+            XmlGameScreenManager = new XMLmanager<GameScreen>();
+            XmlGameScreenManager.type = currentScreen.GetType();
+            currentScreen = XmlGameScreenManager.Load("Load/SplashScreen.xml");
+        }
+
+       
 
 
         public void LoadContent(ContentManager Content)

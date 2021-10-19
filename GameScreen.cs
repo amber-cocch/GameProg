@@ -35,7 +35,7 @@ namespace monogame_assignment
 
         public virtual void Update(GameTime gameTime)
         {
-
+            InputManager.Instance.Update(gameTime);
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)

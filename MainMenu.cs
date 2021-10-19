@@ -11,14 +11,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 using Microsoft.Xna.Framework.Input;
 
-
 namespace monogame_assignment
 {
-   
-    public class SplashScreen : GameScreen
+    public class MainMenu : GameScreen
     {
         public string Path;
-       // Texture2D image;
+        //Texture2D image;
         public Image Image;
         [XmlIgnore]
         public ContentManager Content;
@@ -28,7 +26,7 @@ namespace monogame_assignment
             base.LoadContent();
             Image.LoadContent();
 
-           // Path = "SplashScreen/logo";
+           // Path = "play";
            // image = content.Load<Texture2D>(Path);
         }
 
@@ -36,6 +34,7 @@ namespace monogame_assignment
         {
             base.UnloadContent();
             Image.UnloadContent();
+
         }
 
         public override void Update(GameTime gameTime)
@@ -43,23 +42,21 @@ namespace monogame_assignment
             base.Update(gameTime);
             Image.Update(gameTime);
 
-           /* if(Keyboard.GetState().IsKeyDown(Keys.Enter) && !ScreenManager.Instance.IsTransitioning)
+            if (InputManager.Instance.KeyPressed(Keys.Enter, Keys.Z))
             {
-                ScreenManager.Instance.ChangeScreens("SplashScreen");
-            }*/
-
-            if(InputManager.Instance.KeyPressed(Keys.Enter, Keys.Z))
-            {
-                ScreenManager.Instance.ChangeScreens("MainMenu");
+                ScreenManager.Instance.ChangeScreens("Game1");
             }
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+   
+            base.Draw(spriteBatch);
             Image.Draw(spriteBatch);
-           // base.Draw(spriteBatch);
 
             //spriteBatch.Draw(image, Vector2.Zero, Color.White);
         }
     }
 }
+

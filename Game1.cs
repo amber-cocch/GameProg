@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace monogame_assignment
 {
@@ -8,6 +9,7 @@ namespace monogame_assignment
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private List<Sprite> _sprites;
 
         public Game1()
         {
@@ -36,6 +38,29 @@ namespace monogame_assignment
             ScreenManager.Instance.LoadContent(Content);
 
             // TODO: use this.Content to load your game content here
+
+            var animations = new Dictionary<string, Animation>()
+            {
+                {"walkUp", new Animation(Content.Load<Texture2D>("Player/walkUp"), 3) },
+                {"walkDown", new Animation(Content.Load<Texture2D>("Player/walkDown"), 3) },
+                {"walkLeft", new Animation(Content.Load<Texture2D>("Player/walkLeft"), 3) },
+                {"walkRight", new Animation(Content.Load<Texture2D>("Player/walkRight"), 3) },
+            };
+
+            _sprites = new List<Sprite>()
+            {
+                new Sprite(animations)
+                {
+                    Position = new Vector2(100,100),
+                    Input = new Input()
+                    {
+                        Up = Keys.W,
+                        Down = Keys.S,
+                        Left = Keys.A,
+                        Right = Keys.D
+                    }
+                }
+            };
         }
 
         protected override void UnloadContent()
