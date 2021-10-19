@@ -37,6 +37,17 @@ namespace monogame_assignment
 
         MainMenu MainMenu;
 
+        public ScreenManager()
+        {
+            Dimensions = new Vector2(1920, 1080);
+
+            currentScreen = new SplashScreen(); //polymorphism
+
+            XmlGameScreenManager = new XMLmanager<GameScreen>();
+            XmlGameScreenManager.type = currentScreen.GetType();
+            currentScreen = XmlGameScreenManager.Load("Load/SplashScreen.xml");
+        }
+
         public static ScreenManager Instance
         {
             get
@@ -59,7 +70,9 @@ namespace monogame_assignment
         //The only thing I did discover was that if I changed Image.Alpha to greater than 0, it did darken the screen to that alpha when I pressed enter, but it did not fade in or fade out 
         //to the other screen. It abruptly changed the alpha and that's it. Maybe that means FadeEffect doesn't work? But it did work when we cycled the fading. Maybe FadeEffect is not
         //in the effectList? I am not sure.
-        public void ChangeScreens(string screenName) 
+        
+
+        public void ChangeScreens(string screenName)
         {
             newScreen = (GameScreen)Activator.CreateInstance(Type.GetType("monogame_assignment." + screenName));
             Image.IsActive = true;
@@ -92,18 +105,9 @@ namespace monogame_assignment
             }
         }
 
-       
 
-        public ScreenManager()
-        {
-            Dimensions = new Vector2(1920, 1080);
 
-            currentScreen = new SplashScreen(); //polymorphism
-
-            XmlGameScreenManager = new XMLmanager<GameScreen>();
-            XmlGameScreenManager.type = currentScreen.GetType();
-            currentScreen = XmlGameScreenManager.Load("Load/SplashScreen.xml");
-        }
+        
 
        
 

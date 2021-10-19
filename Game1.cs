@@ -39,6 +39,8 @@ namespace monogame_assignment
 
             // TODO: use this.Content to load your game content here
 
+            //When my sprite loads, only the top part of the image appears?? I do not know why this is happening.
+
             var animations = new Dictionary<string, Animation>()
             {
                 {"walkUp", new Animation(Content.Load<Texture2D>("Player/walkUp"), 3) },
@@ -77,6 +79,11 @@ namespace monogame_assignment
             // TODO: Add your update logic here
             ScreenManager.Instance.Update(gameTime);
 
+            foreach (var sprite in _sprites)
+            {
+                sprite.Update(gameTime, _sprites);
+            }
+
             base.Update(gameTime);
         }
 
@@ -89,6 +96,10 @@ namespace monogame_assignment
 
             _spriteBatch.Begin();
             ScreenManager.Instance.Draw(_spriteBatch);
+            foreach (var sprite in _sprites)
+            {
+                sprite.Draw(_spriteBatch);
+            }
             _spriteBatch.End();
             base.Draw(gameTime);
         }

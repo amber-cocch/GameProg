@@ -17,6 +17,8 @@ namespace monogame_assignment
         public Type type;
 
         public string XmlPath;
+
+
         public GameScreen()
         {
             type = this.GetType();
